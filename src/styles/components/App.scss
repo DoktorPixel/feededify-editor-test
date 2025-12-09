@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+.main {
+  position: relative;
+  z-index: -102;
+  background-color: #f1f1f1;
+  font-family: "Onest", sans-serif;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  // gap: 15px;
+  gap: 5px;
+  z-index: -101;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main .app .css-113d811-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-1niro10 {
+  top: -12px !important;
+  left: -15px !important;
+  font-family: "Onest", sans-serif !important;
+}
+
+.main .app .css-19qnlrw-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-160rfsr {
+  top: -10px !important;
+  font-family: "Onest", sans-serif !important;
+}
+
+.main .app .css-vbs97-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-15o3jrg-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-1d2vppo-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-1nf19ak-MuiFormLabel-root-MuiInputLabel-root,
+.main .app .css-1jbmyw5-MuiFormLabel-root-MuiInputLabel-root {
+  font-family: "Onest", sans-serif !important;
+}
+//
+.instructions {
+  width: 320px;
+  background: #f0f0f0;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  height: 50px;
+  position: relative;
+  z-index: -106;
+}
+.project-name {
+  font-weight: 700 !important;
+  margin: 0 !important;
+  line-height: 1;
+}
+
+.padding-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.project-dialog-input input {
+  padding: 14px !important;
+}

@@ -1,0 +1,25 @@
+@use "fonts";
+@use "reset";
+
+@use "./components/App.scss";
+@use "./components/BannerArea.scss";
+@use "./components/ObjectProperties.scss";
+@use "./components/Sidebar.scss";
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+
+* {
+  font-family: "Onest", sans-serif;
+}
+html,
+body,
+#root {
+  font-family: "Onest", "Inter", sans-serif;
+}
+#root {
+  z-index: -105;
+  position: relative;
+}
+#body {
+  z-index: -106;
+  position: relative;
+}

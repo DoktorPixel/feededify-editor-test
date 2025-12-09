@@ -1,0 +1,162 @@
+.banner-area-container {
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  z-index: -100;
+  margin-bottom: 1px;
+  cursor: default;
+  user-select: none;
+  // scrollbar-gutter: stable;
+}
+
+.banner-area {
+  flex: 0 0 auto;
+  position: relative;
+  top: 20px;
+  background: #fff;
+  z-index: -100;
+  overflow: hidden;
+}
+
+.object {
+  position: absolute;
+  cursor: grab;
+}
+
+.banner-object,
+.banner-object-child {
+  border: 1px solid transparent;
+  cursor: pointer;
+  transform: translate3d(0, 0, 0); /* включает GPU */
+  will-change: transform;
+}
+.banner-object:hover {
+  border: 1px solid #ccc;
+}
+
+.banner-object-child:hover {
+  border: 1px solid #ccc !important ;
+}
+
+.banner-object.selected {
+  border: 1px solid blue;
+}
+
+.banner-object-child.selected {
+  border: 1px solid blue !important;
+}
+
+.banner-object .text-field.banner-object-child {
+  border: 1px solid transparent !important;
+}
+
+.banner-area .text-field.banner-object-child:hover {
+  border: 1px solid #ccc !important ;
+}
+
+.banner-area .text-field.banner-object-child.selected {
+  border: 1px solid blue !important;
+}
+
+.banner-area .banner-object .banner-object-child.selected-grand-child {
+  border: 1px solid blue !important;
+}
+
+.resize-handle {
+  display: none;
+}
+
+.resize-handle.selected {
+  display: block;
+  position: absolute;
+  background-color: blue;
+  cursor: pointer;
+}
+
+.resize-handle.bottom-right,
+.resize-handle.top-left,
+.resize-handle.top-right,
+.resize-handle.bottom-left {
+  width: 8px;
+  height: 8px;
+}
+
+.resize-handle.bottom-right {
+  right: 0;
+  bottom: 0;
+  cursor: se-resize;
+}
+.resize-handle.top-left {
+  left: 0;
+  top: 0;
+  cursor: nw-resize;
+}
+.resize-handle.top-right {
+  right: 0;
+  top: 0;
+  cursor: ne-resize;
+}
+.resize-handle.bottom-left {
+  left: 0;
+  bottom: 0;
+  cursor: sw-resize;
+}
+
+.resize-handle.middle-top,
+.resize-handle.middle-bottom {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 4px;
+}
+
+.resize-handle.middle-top {
+  top: 0;
+  cursor: n-resize;
+}
+.resize-handle.middle-bottom {
+  bottom: 0;
+  cursor: s-resize;
+}
+
+.resize-handle.middle-left,
+.resize-handle.middle-right {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 8px;
+}
+
+.resize-handle.middle-left {
+  left: 0;
+  cursor: w-resize;
+}
+.resize-handle.middle-right {
+  right: 0;
+  cursor: e-resize;
+}
+
+.banner-figure {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+//
+
+.mode-switch-wrapper {
+  z-index: 1000;
+  position: absolute;
+  top: 6px;
+  right: 0px;
+}
+
+.selection-border {
+  z-index: 999;
+  box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
