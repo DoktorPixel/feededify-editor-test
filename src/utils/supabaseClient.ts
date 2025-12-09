@@ -4,7 +4,6 @@ import {
   type Session,
   type SupabaseClient,
 } from "@supabase/supabase-js";
-import { getCookie, setCookie, deleteCookie } from "./cookieUtils";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -13,31 +12,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error("Supabase URL and Anon Key must be defined in .env");
 }
 
-const cookieStorage = {
-  getItem: (key: string): string | null => getCookie(key),
-  setItem: (key: string, value: string) => {
-    const isHttps =
-      typeof window !== "undefined" && window.location.protocol === "https:";
-    setCookie(key, value, {
-      path: "/",
-      expires: 7,
-      secure: isHttps,
-      sameSite: isHttps ? "None" : "Lax",
-    });
-  },
-  removeItem: (key: string) => {
-    deleteCookie(key, { path: "/" });
-  },
-};
-
-const forceLocal = import.meta.env.VITE_FORCE_LOCAL_STORAGE === "true";
-
-const storage =
-  typeof window !== "undefined" &&
-  (forceLocal || window.location.hostname === "localhost")
-    ? window.localStorage
-    : cookieStorage;
-
 export const supabase: SupabaseClient = createClient(
   supabaseUrl,
   supabaseAnonKey,
@@ -45,11 +19,14 @@ export const supabase: SupabaseClient = createClient(
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      storage,
+      storage: window.localStorage, // localStorage only
     },
   }
 );
 
+/**
+ * Restore session from tokens (from query params).
+ */
 export async function restoreSessionFromTokens(
   accessToken: string | null,
   refreshToken: string | null
@@ -60,26 +37,18 @@ export async function restoreSessionFromTokens(
   }
 
   try {
-    const resp = await supabase.auth.setSession({
+    const { data, error } = await supabase.auth.setSession({
       access_token: accessToken,
       refresh_token: refreshToken,
     });
 
-    if (resp.error) {
-      console.error("[Auth] setSession error:", resp.error);
+    if (error) {
+      console.error("[Auth] setSession error:", error);
       return null;
     }
-    const maxRetries = 5;
-    for (let i = 0; i < maxRetries; i++) {
-      const { data } = await supabase.auth.getSession();
-      if (data?.session) {
-        return data.session;
-      }
-      await new Promise((r) => setTimeout(r, 50));
-    }
 
-    return resp.data?.session ?? null;
-  } catch (err: unknown) {
+    return data.session;
+  } catch (err) {
     console.error("[Auth] restoreSessionFromTokens exception:", err);
     return null;
   }
@@ -91,9 +60,7 @@ export const getToken = async (): Promise<string | null> => {
     console.error("Error fetching session:", error);
     return null;
   }
-  const session = data.session;
-  if (!session) return null;
-  return session.access_token ?? null;
+  return data.session?.access_token ?? null;
 };
 
 export const signIn = async (email: string, password: string) => {
@@ -101,9 +68,7 @@ export const signIn = async (email: string, password: string) => {
     email,
     password,
   });
-  if (error) {
-    throw error;
-  }
+  if (error) throw error;
   return data;
 };
 
